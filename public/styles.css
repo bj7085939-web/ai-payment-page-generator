@@ -1,0 +1,21 @@
+* { box-sizing: border-box; }
+body { font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; margin: 0; background: #f6f7f9; color: #1c2733; }
+header { padding: 24px 32px 8px; }
+h1 { margin: 0 0 6px; font-size: 26px; }
+.sub { color: #5a6b7c; margin: 0 0 10px; }
+.badge { background: #fff3cd; border: 1px solid #e0c26a; border-radius: 999px; padding: 3px 12px; font-size: 13px; }
+.grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 20px; padding: 20px 32px; }
+@media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+.card { background: #fff; border: 1px solid #e2e7ee; border-radius: 12px; padding: 20px; }
+label { display: block; margin: 10px 0; font-size: 14px; }
+input, select, textarea { width: 100%; padding: 8px; margin-top: 4px; border: 1px solid #c9d3de; border-radius: 8px; font-size: 14px; }
+button { padding: 9px 16px; border: 1px solid #0070e0; background: #fff; color: #0070e0; border-radius: 8px; cursor: pointer; margin: 8px 0; }
+button.primary { background: #0070e0; color: #fff; }
+.mono { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12.5px; white-space: pre-wrap; word-break: break-word; background: #f0f3f7; border-radius: 8px; padding: 10px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { border-bottom: 1px solid #e2e7ee; padding: 7px 6px; text-align: left; }
+.paybox { max-width: 520px; margin: 48px auto; text-align: center; }
+.price { font-size: 32px; font-weight: 700; color: #0070e0; }
+.note { color: #5a6b7c; font-size: 13px; }
+.err { color: #c0392b; }
+footer { padding: 0 32px 24px; color: #8a99a8; font-size: 12.5px; }

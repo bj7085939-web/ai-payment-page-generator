@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pay · {{PRODUCT}}</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<main class="paybox card">
+  <h1>{{PRODUCT}}</h1>
+  <p class="price">{{AMOUNT}} {{CURRENCY}}</p>
+  <p>状态 / Status: <strong id="status">{{STATUS}}</strong></p>
+
+  <!-- Real PayPal JS SDK button renders here once Sandbox credentials are set.
+       client-id comes from /api/config (placeholder value = REPLACE_ME_SANDBOX_CLIENT_ID). -->
+  <div id="paypal-button-container"></div>
+
+  <hr>
+  <p class="note">演示模式（未配置 Sandbox 凭据时）：下面按钮在本地模拟一笔 Sandbox 付款，
+  用来跑通「付款 → 台账 → 对账摘要」全流程，不涉及真实资金。</p>
+  <button id="simPay" class="primary">模拟 Sandbox 付款 / Simulate payment</button>
+  <pre id="result" class="mono"></pre>
+  <p><a href="/">← 返回生成器</a></p>
+</main>
+<script>
+  const slug = "{{SLUG}}";
+  // Load the PayPal SDK skeleton (harmless with placeholder id; renders nothing usable until replaced).
+  fetch("/api/config").then(r => r.json()).then(cfg => {
+    const s = document.createElement("script");
+    s.src = "https://www.paypal.com/sdk/js?client-id=" + encodeURIComponent(cfg.clientId) + "&currency={{CURRENCY}}";
+    s.onload = () => {
+      if (window.paypal && cfg.paypalConfigured) {
+        paypal.Buttons({
+          createOrder: () => fetch("/api/paypal/orders", { method: "POST", headers: {"Content-Type":"application/json"}, body: JSON.stringify({ slug }) }).then(r => r.json()).then(o => o.id),
+          onApprove: (data) => fetch(`/api/paypal/orders/${data.orderID}/capture`, { method: "POST" }).then(() => location.reload()),
+        }).render("#paypal-button-container");
+      }
+    };
+    document.head.appendChild(s);
+  });
+  document.getElementById("simPay").addEventListener("click", async () => {
+    const r = await fetch(`/api/sandbox/pay/${slug}`, { method: "POST" });
+    const j = await r.json();
+    document.getElementById("result").textContent = JSON.stringify(j, null, 2);
+    document.getElementById("status").textContent = "paid";
+  });
+</script>
+</body>
+</html>

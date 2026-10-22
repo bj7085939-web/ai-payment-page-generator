@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 收款页生成器 · AI Payment Page Generator</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header>
+  <h1>AI 收款页生成器</h1>
+  <p class="sub">一句话描述生意 → 生成收款页 → PayPal Sandbox 结账 → 自动对账与催付草稿</p>
+  <span id="modeBadge" class="badge">loading…</span>
+</header>
+
+<main class="grid">
+  <section class="card">
+    <h2>1 · 描述这笔生意（自然语言）</h2>
+    <textarea id="nlInput" rows="3" placeholder="例：卖一套 Logo 设计套餐 300 美元，买家邮箱 demo@example.com">卖一套 Logo 设计套餐 300 美元</textarea>
+    <button id="parseBtn">解析成订单 →</button>
+    <div id="parseOut" class="mono"></div>
+
+    <h2>2 · 确认并生成收款页</h2>
+    <label>商品 <input id="fProduct" type="text"></label>
+    <label>金额 <input id="fAmount" type="number" min="0" step="0.01"></label>
+    <label>币种
+      <select id="fCurrency">
+        <option>USD</option><option>CNY</option><option>EUR</option><option>GBP</option><option>JPY</option>
+      </select>
+    </label>
+    <label>买家邮箱（可选）<input id="fEmail" type="email"></label>
+    <button id="createBtn" class="primary">生成收款页</button>
+    <div id="createdOut"></div>
+  </section>
+
+  <section class="card">
+    <h2>3 · 订单台账 / 对账</h2>
+    <div id="totals" class="mono"></div>
+    <table id="ledger">
+      <thead><tr><th>商品</th><th>金额</th><th>状态</th><th>操作</th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <h3>对账摘要 / 催付草稿</h3>
+    <pre id="detail" class="mono">点击台账里的一行查看。</pre>
+  </section>
+</main>
+
+<footer>Hackathon MVP · 演示数据均为虚构 · 支付在 DEMO 模式下为本地模拟，接入 Sandbox 凭据后走真实 PayPal Sandbox 链路</footer>
+<script src="/app.js"></script>
+</body>
+</html>
